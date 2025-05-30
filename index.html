@@ -63,6 +63,7 @@
             box-sizing: border-box;
         }
 
+        .snsphoto-buttons,
         .store-buttons,
         .priority-buttons,
         .demand-buttons,
@@ -77,6 +78,7 @@
             margin-bottom: 20px;
         }
 
+        .snsphoto-buttons button,
         .store-buttons button,
         .priority-buttons button,
         .demand-buttons button,
@@ -96,6 +98,7 @@
             white-space: nowrap;
         }
 
+        .snsphoto-buttons button.active,
         .store-buttons button.active,
         .priority-buttons button.active,
         .demand-buttons button.active,
@@ -261,7 +264,7 @@
 
 <body>
     <div class="container">
-        <h1>Andova<br>カウンセリングシート</h1>
+        <h1>Andova名古屋<br>カウンセリングシート</h1>
         <div class="info-text">以下全て入力後【アンケート送信】ボタンを押してください。</div>
 
         <div class="label">ご来店日(例:西暦記載 ○年○月○日)</div>
@@ -311,7 +314,6 @@
             <button type="button" id="twochance" onclick="selectchance(this)">3週間に1度(頻度)</button>
             <button type="button" id="threechance" onclick="selectchance(this)">1ヵ月に1度(頻度) </button>
             <button type="button" id="fourchance" onclick="selectchance(this)">2〜3カ月に1度(頻度)</button>
-            <button type="button" id="fourchance" onclick="selectchance(this)">ネイルサロンに初めて来た</button>
         </div>
 
         <div class="label">過去施術<br>(過去にサロンで受けたことがある施術)</div>
@@ -323,7 +325,6 @@
             <button type="button" id="fiveIntroduction" onclick="selectIntroduction(this)">ジェルネイル(過去施術) </button>
             <button type="button" id="sixIntroduction" onclick="selectIntroduction(this)">フット(過去施術) </button>
             <button type="button" id="sevenIntroduction" onclick="selectIntroduction(this)">その他(過去施術) </button>
-            <button type="button" id="sevenIntroduction" onclick="selectIntroduction(this)">ネイルサロンに初めて来た </button>
         </div>
 
         <div class="label">薬品/ネイルでのアレルギー</div>
@@ -334,6 +335,13 @@
 
         <div class="label">現在補強または長さ出ししている箇所がある方は、<br>左右それぞれの本数をご記入ください。<br>(分かる範囲で結構です)</div>
         <textarea id="message8" rows="1" placeholder="入力してください"></textarea> <!-- メッセージ入力フィールド -->
+
+        <div class="label">施術後のお写真を、当サロンのSNS<br>（Instagram・ホットペッパーなど）で<br>ご紹介させていただいてもよろしいでしょうか？<br>※お顔や個人が特定される情報は載せません。<br>ご協力は任意です。</div>
+        <div class="snsphoto-buttons">
+            <button type="button" id="onesnsphoto" onclick="selectsnsphoto(this)">はい</button>
+            <button type="button" id="twosnsphoto" onclick="selectsnsphoto(this)">手元だけならOK</button>
+            <button type="button" id="theoosnsphoto" onclick="selectsnsphoto(this)">いいえ</button>
+        </div>
 
         <div class="label">重要項目の同意</div>
         <div class="info-text">①トークでのご予約の受付・変更・キャンセルについては承っておりません。全てTELにてお願いいたします😊✨ 
@@ -357,6 +365,7 @@
         let IntroductionCount = '';
         let deliveryCount = '';
         let budgetyCount = '';
+        let snsphotoCount = '';
 
         // LIFF初期化
         document.addEventListener('DOMContentLoaded', function () {
@@ -444,6 +453,16 @@
             budgetyCount = element.innerText;
         }
 
+        function selectsnsphoto(element) {
+            // 単一選択項目の処理コード
+            const buttons = document.querySelectorAll('.snsphoto-buttons button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // 選択されたボタンだけにactiveクラスを追加
+            element.classList.add('active');
+            snsphotoCount = element.innerText;
+        }
+
         function submitForm() {
             const message = document.getElementById('message').value;
             const message2 = document.getElementById('message2').value;
@@ -459,6 +478,7 @@
             IntroductionCount: IntroductionCount;
             deliveryCount: deliveryCount;
             budgetyCount: budgetyCount;
+            snsphotoCount: snsphotoCount;
 
             const formData = {
                 message,
@@ -475,6 +495,7 @@
                 IntroductionCount,
                 deliveryCount,
                 budgetyCount,
+                snsphotoCount,
             };
 
     // 「同意しない」が選択されていたら警告を表示して中止
@@ -558,7 +579,7 @@
             // LINEトークにメッセージを送信
             liff.sendMessages([{
                 type: 'text',
-                text: `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.message5}\n\n【ご職業】\n・${formData.priorityCount}\n\n【来店動機】\n・${formData.demandCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【来店頻度】\n・${formData.chanceCount}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【重要項目の同意】\n・${formData.budgetyCount}`
+                text: `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.message5}\n\n【ご職業】\n・${formData.priorityCount}\n\n【来店動機】\n・${formData.demandCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【来店頻度】\n・${formData.chanceCount}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【SNS紹介】\n・${formData.snsphotoCount}\n\n【重要項目の同意】\n・${formData.budgetyCount}`
             }]).then(() => {
                 /* メッセージ送信成功時の処理 */
                 alert('カウンセリングシートのご記入と、重要事項へのご同意、ありがとうございました。');
