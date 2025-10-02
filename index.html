@@ -262,7 +262,26 @@
                 /* テキストの高さ調整 */
             }
         }
-        
+
+/* 追加 */
+.priority-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* 詳細テキスト行を1行まるごと使う */
+.priority-buttons .ward-extra {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+/* 入力ボックスも横いっぱい＆はみ出し防止 */
+.priority-buttons .ward-extra input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
     </style>
 </head>
 
