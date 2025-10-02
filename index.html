@@ -64,6 +64,7 @@
         }
 
         .snsphoto-buttons,
+        .timezone-buttons,
         .store-buttons,
         .priority-buttons,
         .demand-buttons,
@@ -79,6 +80,7 @@
         }
 
         .snsphoto-buttons button,
+        .timezone-buttons button,
         .store-buttons button,
         .priority-buttons button,
         .demand-buttons button,
@@ -99,6 +101,7 @@
         }
 
         .snsphoto-buttons button.active,
+        .timezone-buttons button.active,
         .store-buttons button.active,
         .priority-buttons button.active,
         .demand-buttons button.active,
@@ -259,6 +262,7 @@
                 /* テキストの高さ調整 */
             }
         }
+        
     </style>
 </head>
 
@@ -341,34 +345,41 @@
             data-ja-placeholder="入力してください" 
             data-en-placeholder="Please enter"></textarea>
 
-  <div class="label" 
-       data-ja="ご職業" 
-       data-en="Occupation">
-    ご職業
-  </div>
-  <div class="priority-buttons">
-    <button type="button" id="onepriority" onclick="selectpriority(this)" 
-            data-ja="会社員（職業）" data-en="Company Employee">会社員（職業）</button>
-    <button type="button" id="twopriority" onclick="selectpriority(this)" 
-            data-ja="パート・アルバイト（職業）" data-en="Part-time/Temporary">パート・アルバイト（職業）</button>
-    <button type="button" id="threepriority" onclick="selectpriority(this)" 
-            data-ja="学生（職業）" data-en="Student">学生（職業）</button>
-    <button type="button" id="fourpriority" onclick="selectpriority(this)" 
-            data-ja="専業主婦（職業）" data-en="Homemaker">専業主婦（職業）</button>
-    <button type="button" id="fivepriority" onclick="selectpriority(this)" 
-            data-ja="その他（職業）" data-en="Other">その他（職業）</button>
-  </div>
+<div class="label" data-ja="お住まいの区" data-en="Ward where you live">お住まいの区</div>
+<div class="priority-buttons">
+<button type="button" id="onepriority" onclick="selectpriority(this)" data-ja="中区" data-en="Naka Ward">中区</button>
+<button type="button" id="twopriority" onclick="selectpriority(this)" data-ja="西区" data-en="Nishi Ward">西区</button>
+<button type="button" id="threepriority" onclick="selectpriority(this)" data-ja="中村区" data-en="Nakamura Ward">中村区</button>
+<button type="button" id="fourpriority" onclick="selectpriority(this)" data-ja="東区" data-en="Higashi Ward">東区</button>
+<button type="button" id="fivepriority" onclick="selectpriority(this)" data-ja="千種区" data-en="Chikusa Ward">千種区</button>
+<button type="button" id="onepriority" onclick="selectpriority(this)" data-ja="昭和区" data-en="Showa Ward">昭和区</button>
+<button type="button" id="twopriority" onclick="selectpriority(this)" data-ja="名東区" data-en="Meito Ward">名東区</button>
+<button type="button" id="threepriority" onclick="selectpriority(this)" data-ja="天白区" data-en="Tempaku Ward">天白区</button>
+<button type="button" id="fourpriority" onclick="selectpriority(this)" data-ja="瑞穂区" data-en="Mizuho Ward">瑞穂区</button>
+<div class="ward-extra" style="margin-top:8px;">
+  <input
+    type="text"
+    id="wardFreeText"
+    placeholder="お住まいの詳細（任意）例：瑞穂通◯丁目 など"
+    style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;"
+  />
+</div>
+</div>
 
-
-<div class="label" data-ja="来店動機" data-en="Reason for Visit">来店動機</div>
+<div class="label" data-ja="勤務先（または通っている区）" data-en="Reason for Visit">勤務先（または通っている区）</div>
 <div class="demand-buttons">
-  <button type="button" id="onedemand" onclick="selectdemand(this)" data-ja="HP（来店動機）" data-en="Website">HP（来店動機）</button>
-  <button type="button" id="twodemand" onclick="selectdemand(this)" data-ja="Instagram（来店動機）" data-en="Instagram">Instagram（来店動機）</button>
-  <button type="button" id="threedemand" onclick="selectdemand(this)" data-ja="Google等での検索（来店動機）" data-en="Google Search">Google等での検索（来店動機）</button>
-  <button type="button" id="fourdemand" onclick="selectdemand(this)" data-ja="ホットペッパービューティー（来店動機）" data-en="Hot Pepper Beauty">ホットペッパービューティー（来店動機）</button>
-  <button type="button" id="fivedemand" onclick="selectdemand(this)" data-ja="知人の紹介（来店動機）" data-en="Referred by Friend">知人の紹介（来店動機）</button>
-  <button type="button" id="sixdemand" onclick="selectdemand(this)" data-ja="通りすがり（来店動機）" data-en="Walk-in">通りすがり（来店動機）</button>
-  <button type="button" id="sevemdemand" onclick="selectdemand(this)" data-ja="その他（来店動機）" data-en="Other">その他（来店動機）</button>
+  <button type="button" id="onedemand" onclick="selectdemand(this)" data-ja="中区（伏見・栄）" data-en="Naka Ward">中区（伏見・栄）</button>
+  <button type="button" id="twodemand" onclick="selectdemand(this)" data-ja="中村区（名駅）" data-en="Nakamura Ward">中村区（名駅）</button>
+  <button type="button" id="threedemand" onclick="selectdemand(this)" data-ja="東区（栄・新栄）" data-en="Higashi Ward">東区（栄・新栄）</button>
+  <button type="button" id="fourdemand" onclick="selectdemand(this)" data-ja="勤務先なし（専業主婦・学生など）" data-en="No workplace">勤務先なし（専業主婦・学生など）</button>
+</div>
+
+<div class="label" data-ja="来店しやすい時間帯" data-en="Convenient time to visit">来店しやすい時間帯</div>
+<div class="timezone-buttons">
+  <button type="button" id="onetimezone" onclick="selecttimezone(this)" data-ja="午前" data-en="morning">午前</button>
+  <button type="button" id="twotimezone" onclick="selecttimezone(this)" data-ja="午後" data-en="afternoon">午後</button>
+  <button type="button" id="threetimezone" onclick="selecttimezone(this)" data-ja="夕方以降" data-en="After the evening">夕方以降</button>
+  <button type="button" id="fourtimezone" onclick="selecttimezone(this)" data-ja="土日祝" data-en="Saturdays, Sundays, and holidays">土日祝</button>
 </div>
 
 <div class="label" data-ja='"知人の紹介"を選択された方は、紹介者のお名前をご記入ください。' data-en='If "Referred by Friend" was selected, please write the referrer’s name.'>
@@ -376,24 +387,20 @@
 </div>
 <textarea id="message7" rows="1" placeholder="入力してください" data-ja-placeholder="入力してください" data-en-placeholder="Please enter"></textarea>
 
-<div class="label" data-ja="来店頻度" data-en="Visit Frequency">来店頻度<br>(ネイルサロンにどのくらいの頻度で通っているか)</div>
-<div class="chance-buttons">
-  <button type="button" id="fivechance" onclick="selectchance(this)" data-ja="ネイルサロンに初めて来た" data-en="First Visit to Nail Salon">ネイルサロンに初めて来た</button>
-  <button type="button" id="onechance" onclick="selectchance(this)" data-ja="2週間に1度(頻度)" data-en="Every 2 weeks">2週間に1度(頻度)</button>
-  <button type="button" id="twochance" onclick="selectchance(this)" data-ja="3週間に1度(頻度)" data-en="Every 3 weeks">3週間に1度(頻度)</button>
-  <button type="button" id="threechance" onclick="selectchance(this)" data-ja="1ヵ月に1度(頻度)" data-en="Once a month">1ヵ月に1度(頻度)</button>
-  <button type="button" id="fourchance" onclick="selectchance(this)" data-ja="2〜3カ月に1度(頻度)" data-en="Every 2–3 months">2〜3カ月に1度(頻度)</button>
-</div>
-
 <div class="label" data-ja="過去施術" data-en="Previous Treatments">過去施術<br>(過去にサロンで受けたことがある施術)</div>
 <div class="Introduction-buttons">
   <button type="button" id="oneIntroduction" onclick="selectIntroduction(this)" data-ja="ネイルサロンに初めて来た(過去施術)" data-en="First Time at a Nail Salon">ネイルサロンに初めて来た(過去施術)</button>
   <button type="button" id="twoIntroduction" onclick="selectIntroduction(this)" data-ja="ケア(過去施術)" data-en="Care">ケア(過去施術)</button>
-  <button type="button" id="threeIntroduction" onclick="selectIntroduction(this)" data-ja="カラーリング(過去施術)" data-en="Coloring">カラーリング(過去施術)</button>
   <button type="button" id="fourIntroduction" onclick="selectIntroduction(this)" data-ja="スカルプチャー(過去施術)" data-en="Sculpture">スカルプチャー(過去施術)</button>
   <button type="button" id="fiveIntroduction" onclick="selectIntroduction(this)" data-ja="ジェルネイル(過去施術)" data-en="Gel Nail">ジェルネイル(過去施術)</button>
   <button type="button" id="sixIntroduction" onclick="selectIntroduction(this)" data-ja="フット(過去施術)" data-en="Foot Treatment">フット(過去施術)</button>
   <button type="button" id="sevenIntroduction" onclick="selectIntroduction(this)" data-ja="その他(過去施術)" data-en="Other">その他(過去施術)</button>
+</div>
+
+<div class="label" data-ja="空き状況の配信を希望されますか？" data-en="Would you like to be notified of availability?">空き状況の配信を希望されますか？</div>
+<div class="chance-buttons">
+  <button type="button" id="fivechance" onclick="selectchance(this)" data-ja="はい" data-en="yes">はい</button>
+  <button type="button" id="onechance" onclick="selectchance(this)" data-ja="いいえ" data-en="no">いいえ</button>
 </div>
 
 <div class="label" data-ja="薬品/ネイルでのアレルギー" data-en="Allergies to Products/Nails">薬品/ネイルでのアレルギー</div>
@@ -466,6 +473,7 @@ For inquiries, please include details and a photo via chat to allow smoother com
 
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script> <!-- LIFF SDKの読み込み -->
     <script>
+        let timezoneCount = '';
         let priorityCount = '';
         let demandCount = '';
         let chanceCount = '';
@@ -530,6 +538,14 @@ function selectchance(element) {
     chanceCount = element.getAttribute('data-ja');
 }
 
+function selecttimezone(element) {
+    const buttons = document.querySelectorAll('.timezone-buttons button');
+    buttons.forEach(button => button.classList.remove('active'));
+
+    element.classList.add('active');
+    timezoneCount = element.getAttribute('data-ja');
+}
+
 function selectIntroduction(element) {
     const buttons = document.querySelectorAll('.Introduction-buttons button');
     buttons.forEach(button => button.classList.remove('active'));
@@ -571,6 +587,7 @@ function selectsnsphoto(element) {
             const message6 = document.getElementById('message6').value;
             const message7 = document.getElementById('message7').value;
             const message8 = document.getElementById('message8').value;
+            timezoneCount: timezoneCount;
             priorityCount: priorityCount;
             demandCount: demandCount;
             chanceCount: chanceCount;
@@ -578,6 +595,10 @@ function selectsnsphoto(element) {
             deliveryCount: deliveryCount;
             budgetyCount: budgetyCount;
             snsphotoCount: snsphotoCount;
+
+  // ▼ 追加：詳細住所（任意）の取得
+  const wardFreeTextEl = document.getElementById('wardFreeText');
+  const wardFreeText   = wardFreeTextEl ? wardFreeTextEl.value.trim() : '';
 
     // data-ja取得
     const submitButtonText = document.querySelector('.submit-button').getAttribute('data-ja');
@@ -591,6 +612,8 @@ function selectsnsphoto(element) {
                 message6,
                 message7,
                 message8,
+                wardFreeText,
+                timezoneCount,
                 priorityCount,
                 demandCount,
                 chanceCount,
@@ -638,19 +661,19 @@ function selectsnsphoto(element) {
 
             // フォームデータのチェック
             if (!formData.priorityCount) {
-                alert('ご職業をご選択ください。');
+                alert('勤務先をご選択ください。');
                 return;
             }
 
             // フォームデータのチェック
             if (!formData.demandCount) {
-                alert('来店動機をご選択ください。');
+                alert('勤務先をご選択ください。');
                 return;
             }
 
             // フォームデータのチェック
             if (!formData.chanceCount) {
-                alert('来店頻度をご選択ください。');
+                alert('空き状況の配信を希望されますか？をご選択ください。');
                 return;
             }
 
@@ -675,7 +698,7 @@ function selectsnsphoto(element) {
             // LINEトークにメッセージを送信
             liff.sendMessages([{
                 type: 'text',
-                text: `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.message5}\n\n【ご職業】\n・${formData.priorityCount}\n\n【来店動機】\n・${formData.demandCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【来店頻度】\n・${formData.chanceCount}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【SNS紹介】\n・${formData.snsphotoCount}\n\n【重要項目の同意】\n・${formData.budgetyCount}`
+                text: `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.message5}\n\n【お住まいの区】\n・${formData.priorityCount}\n\n【お住まいの詳細】\n・${formData.wardFreeText}\n\n【勤務先】\n・${formData.demandCount}\n\n【来店しやすい時間帯】\n・${formData.timezoneCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【空き状況配信】\n・${formData.chanceCount}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【SNS紹介】\n・${formData.snsphotoCount}\n\n【重要項目の同意】\n・${formData.budgetyCount}`
             }]).then(() => {
                 /* メッセージ送信成功時の処理 */
                 alert('カウンセリングシートのご記入と、重要事項へのご同意、ありがとうございました。');
