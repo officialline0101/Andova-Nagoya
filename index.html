@@ -466,12 +466,6 @@
   <button type="button" id="sevenIntroduction" onclick="selectIntroduction(this)" data-ja="その他(過去施術)" data-en="Other">その他(過去施術)</button>
 </div>
 
-<div class="label" data-ja="空き状況の配信を希望されますか？" data-en="Would you like to be notified of availability?">　空き状況の配信を希望されますか？<span class="required">必須</span></div>
-<div class="chance-buttons">
-  <button type="button" id="fivechance" onclick="selectchance(this)" data-ja="はい" data-en="yes">はい</button>
-  <button type="button" id="onechance" onclick="selectchance(this)" data-ja="いいえ" data-en="no">いいえ</button>
-</div>
-
 <div class="label" data-ja="薬品/ネイルでのアレルギー" data-en="Allergies to Products/Nails">　　薬品/ネイルでのアレルギー<span class="required">必須</span></div>
 <div class="delivery-buttons">
   <button type="button" id="onedelivery" onclick="selectdelivery(this)" data-ja="薬品アレルギー有り" data-en="Yes (has allergies)">薬品アレルギー有り</button>
@@ -547,7 +541,6 @@
         let addressCount = "";
         let priorityCount = "";
         let demandCount = '';
-        let chanceCount = '';
         let IntroductionCount = '';
         let deliveryCount = '';
         let budgetyCount = '';
@@ -686,7 +679,6 @@ function selectsnsphoto(element) {
             timezoneCount: timezoneCount;
             priorityCount: priorityCount;
             demandCount: demandCount;
-            chanceCount: chanceCount;
             IntroductionCount: IntroductionCount;
             deliveryCount: deliveryCount;
             budgetyCount: budgetyCount;
@@ -713,7 +705,6 @@ function selectsnsphoto(element) {
                 timezoneCount,
                 priorityCount,
                 demandCount,
-                chanceCount,
                 IntroductionCount,
                 deliveryCount,
                 budgetyCount,
@@ -763,12 +754,6 @@ function selectsnsphoto(element) {
             }
 
             // フォームデータのチェック
-            if (!formData.chanceCount) {
-                alert('空き状況の配信を希望されますか？をご選択ください。');
-                return;
-            }
-
-            // フォームデータのチェック
             if (!formData.IntroductionCount) {
                 alert('過去施術をご選択ください。');
                 return;
@@ -789,7 +774,7 @@ function selectsnsphoto(element) {
             // LINEトークにメッセージを送信
             liff.sendMessages([{
                 type: 'text',
-                text: `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.addressCount}\n\n【お住まいの区】\n・${formData.priorityCount}\n\n【お住まいの詳細】\n・${formData.wardFreeText}\n\n【勤務先】\n・${formData.demandCount}\n\n【来店しやすい時間帯】\n・${formData.timezoneCount}\n\n【来店動機】\n・${formData.doukiCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【空き状況配信】\n・${formData.chanceCount}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【SNS紹介】\n・${formData.snsphotoCount}\n\n【重要項目の同意】\n・${formData.budgetyCount}`
+                text: `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.addressCount}\n\n【お住まいの区】\n・${formData.priorityCount}\n\n【お住まいの詳細】\n・${formData.wardFreeText}\n\n【勤務先】\n・${formData.demandCount}\n\n【来店しやすい時間帯】\n・${formData.timezoneCount}\n\n【来店動機】\n・${formData.doukiCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【SNS紹介】\n・${formData.snsphotoCount}\n\n【重要項目の同意】\n・${formData.budgetyCount}`
             }]).then(() => {
                 /* メッセージ送信成功時の処理 */
                 alert('カウンセリングシートのご記入と、重要事項へのご同意、ありがとうございました。');
