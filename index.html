@@ -440,15 +440,16 @@
   <button type="button" id="fourtimezone" onclick="selecttimezone(this)" data-ja="土日祝" data-en="Saturdays, Sundays, and holidays">土日祝</button>
 </div>
 
-<div class="label" data-ja="来店動機" data-en="Reason for Visit">　　来店動機<span class="required">必須</span></div>
+<div class="label" data-ja="当店を知ったきっかけ" data-en="How did you find out about our store?">　　当店を知ったきっかけ<span class="required">必須</span></div>
 <div class="douki-buttons">
-  <button type="button" id="fourdouki" onclick="selectdouki(this)" data-ja="ホットペッパービューティー（来店動機）" data-en="Hot Pepper Beauty">ホットペッパービューティー（来店動機）</button>
-  <button type="button" id="threedouki" onclick="selectdouki(this)" data-ja="Google等での検索（来店動機）" data-en="Google Search">Google等での検索（来店動機）</button>
+  <button type="button" id="threedouki" onclick="selectdouki(this)" data-ja="Google等での検索" data-en="Google Search">Google等での検索</button>
   <button type="button" id="onedouki" onclick="selectdouki(this)" data-ja="滞在中のホテルで予約してもらった" data-en="I made a reservation at the hotel">滞在中のホテルで予約してもらった</button>
-  <button type="button" id="twodouki" onclick="selectdouki(this)" data-ja="Instagram（来店動機）" data-en="Instagram">Instagram（来店動機）</button>
-  <button type="button" id="fivedouki" onclick="selectdouki(this)" data-ja="知人の紹介（来店動機）" data-en="Referred by Friend">知人の紹介（来店動機）</button>
-  <button type="button" id="sixdouki" onclick="selectdouki(this)" data-ja="通りすがり（来店動機）" data-en="Walk-in">通りすがり（来店動機）</button>
-  <button type="button" id="sevemdouki" onclick="selectdouki(this)" data-ja="その他（来店動機）" data-en="Other">その他（来店動機）</button>
+  <button type="button" id="eitodouki" onclick="selectdouki(this)" data-ja="ホテル・カフェ等に置いてあったカード" data-en="Cards left at hotels, cafes, etc.">ホテル・カフェ等に置いてあったカード</button>
+  <button type="button" id="twodouki" onclick="selectdouki(this)" data-ja="Instagram" data-en="Instagram">Instagram</button>
+  <button type="button" id="fivedouki" onclick="selectdouki(this)" data-ja="知人の紹介" data-en="Referred by Friend">知人の紹介</button>
+  <button type="button" id="sixdouki" onclick="selectdouki(this)" data-ja="通りすがり" data-en="Walk-in">通りすがり</button>
+  <button type="button" id="sevemdouki" onclick="selectdouki(this)" data-ja="その他" data-en="Other">その他</button>
+  <button type="button" id="fourdouki" onclick="selectdouki(this)" data-ja="ホットペッパービューティー" data-en="Hot Pepper Beauty">ホットペッパービューティー</button>
 </div>
 
 <div class="label" data-ja='"知人の紹介"を選択された方は、紹介者のお名前をご記入ください。' data-en='If "Referred by Friend" was selected, please write the referrer’s name.'>
@@ -774,7 +775,7 @@ function selectsnsphoto(element) {
             // LINEトークにメッセージを送信
             liff.sendMessages([{
                 type: 'text',
-                text: `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.addressCount}\n\n【お住まいの区】\n・${formData.priorityCount}\n\n【お住まいの詳細】\n・${formData.wardFreeText}\n\n【勤務先】\n・${formData.demandCount}\n\n【来店しやすい時間帯】\n・${formData.timezoneCount}\n\n【来店動機】\n・${formData.doukiCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【SNS紹介】\n・${formData.snsphotoCount}\n\n【重要項目の同意】\n・${formData.budgetyCount}`
+                text: `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.addressCount}\n\n【お住まいの区】\n・${formData.priorityCount}\n\n【お住まいの詳細】\n・${formData.wardFreeText}\n\n【勤務先】\n・${formData.demandCount}\n\n【来店しやすい時間帯】\n・${formData.timezoneCount}\n\n【当店を知ったきっかけ】\n・${formData.doukiCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【SNS紹介】\n・${formData.snsphotoCount}\n\n【重要項目の同意】\n・${formData.budgetyCount}`
             }]).then(() => {
                 /* メッセージ送信成功時の処理 */
                 alert('カウンセリングシートのご記入と、重要事項へのご同意、ありがとうございました。');
