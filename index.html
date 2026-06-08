@@ -21,7 +21,7 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
+            width: 96%;
             max-width: 500px;
             padding: 20px;
             box-sizing: border-box;
@@ -41,6 +41,8 @@
 
         .label {
             display: block;
+            position: relative;
+            /* 必須マークを右上に絶対配置するための基準 */
             margin-bottom: 10px;
             padding: 10px;
             font-weight: bold;
@@ -102,6 +104,11 @@
             box-sizing: border-box;
             text-align: center;
             white-space: nowrap;
+            /* 言語に関わらずボタンの縦サイズを統一する */
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .address-buttons button.active,
@@ -292,19 +299,81 @@
         /* 必須マークのスタイル */
         .required {
             color: #ffffff;
-            /* ゴールド（黄色） */
             font-weight: lighter;
             /* 文字を細くする */
             font-size: 0.6em;
-            margin-left: 5px;
-            vertical-align: 0.8em;
-            /* 位置を少し上に調整 */
 
-            /* 白色背景の四角形 */
+            /* labelの右上に配置 */
+            position: absolute;
+            top: 4px;
+            right: 4px;
+
+            /* 赤色背景の四角形 */
             background-color: rgb(255, 15, 15);
-            padding: 0 5px;
+            padding: 1px 5px;
             border-radius: 3px;
-            margin-right: 5px;
+            line-height: 1.4;
+        }
+
+        /* 入力チェック一覧 */
+        .checklist {
+            background-color: #f6f2ec;
+            border: 1px solid #d8cfc2;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-top: 10px;
+            margin-bottom: 16px;
+        }
+
+        .checklist-title {
+            margin: 0 0 10px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #5a4a3a;
+            text-align: center;
+        }
+
+        .checklist ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 0;
+            font-size: 14px;
+            color: #888;
+            border-bottom: 1px dashed #e0d8cc;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist li .chk-icon::before {
+            content: '○';
+            color: #c0b6a6;
+            font-weight: bold;
+        }
+
+        .checklist li.done {
+            color: #2e7d4f;
+        }
+
+        .checklist li.done .chk-icon::before {
+            content: '✓';
+            color: #2e9b57;
+        }
+
+        .checklist-progress {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            color: #5a4a3a;
         }
     </style>
 </head>
@@ -323,9 +392,9 @@
   </h1>
 
   <div class="info-text" 
-       data-ja="以下全て入力後【アンケート送信】ボタンを押してください。" 
+       data-ja="以下全て入力後【カウンセリングシート送信】ボタンを押してください。" 
        data-en="Please fill out all fields and press the [Submit] button.">
-    以下全て入力後【アンケート送信】ボタンを押してください。
+    以下全て入力後【カウンセリングシート送信】ボタンを押してください。
   </div>
 
   <div class="label" 
@@ -339,9 +408,9 @@
             data-en-placeholder="Please enter"></textarea>
 
   <div class="label" 
-       data-ja="お名前(漢字フルネーム)" 
-       data-en="Full Name">
-    　　お名前(漢字フルネーム)<span class="required">必須</span>
+       data-ja="お名前(漢字フルネーム)"
+       data-en="Full Name (Kanji)">
+    お名前(漢字フルネーム)<span class="required">必須</span>
   </div>
   <textarea id="message2" rows="1" 
             placeholder="入力してください" 
@@ -349,9 +418,9 @@
             data-en-placeholder="Please enter"></textarea>
 
   <div class="label" 
-       data-ja="お名前(ふりがな)" 
-       data-en="">
-    　　お名前(ふりがな)<span class="required">必須</span>
+       data-ja="お名前(ふりがな)"
+       data-en="Full Name (Phonetic)">
+    お名前(ふりがな)<span class="required">必須</span>
   </div>
   <textarea id="message6" rows="1" 
             placeholder="入力してください" 
@@ -371,7 +440,7 @@
   <div class="label" 
        data-ja="電話番号" 
        data-en="Phone Number">
-    　　電話番号<span class="required">必須</span>
+    電話番号<span class="required">必須</span>
   </div>
   <textarea id="message4" rows="1" 
             placeholder="入力してください" 
@@ -424,26 +493,26 @@
   </div>
 </div>
 
-<div class="label" data-ja="勤務先（または通っている区）" data-en="Reason for Visit">勤務先（または通っている区）<span class="required">必須</span></div>
+<div class="label" data-ja="勤務先（または通っている区）" data-en="Workplace (or ward you commute to)">勤務先（または通っている区）<span class="required">必須</span></div>
 <div class="demand-buttons">
   <button type="button" id="onedemand" onclick="selectdemand(this)" data-ja="中区（伏見・栄）" data-en="Naka Ward">中区（伏見・栄）</button>
   <button type="button" id="twodemand" onclick="selectdemand(this)" data-ja="中村区（名駅）" data-en="Nakamura Ward">中村区（名駅）</button>
   <button type="button" id="threedemand" onclick="selectdemand(this)" data-ja="東区（栄・新栄）" data-en="Higashi Ward">東区（栄・新栄）</button>
-  <button type="button" id="fourdemand" onclick="selectdemand(this)" data-ja="勤務先なし（専業主婦・学生など）" data-en="No workplace">勤務先なし（専業主婦・学生など）</button>
+  <button type="button" id="fourdemand" onclick="selectdemand(this)" data-ja="勤務先なし（専業主婦・学生など）" data-en="No workplace (homemaker, student, etc.)">勤務先なし（専業主婦・学生など）</button>
 </div>
 
-<div class="label" data-ja="来店しやすい時間帯" data-en="Convenient time to visit">　　来店しやすい時間帯<span class="required">必須</span></div>
+<div class="label" data-ja="来店しやすい時間帯" data-en="Convenient time to visit">来店しやすい時間帯<span class="required">必須</span></div>
 <div class="timezone-buttons">
   <button type="button" id="onetimezone" onclick="selecttimezone(this)" data-ja="午前" data-en="morning">午前</button>
   <button type="button" id="twotimezone" onclick="selecttimezone(this)" data-ja="午後" data-en="afternoon">午後</button>
-  <button type="button" id="threetimezone" onclick="selecttimezone(this)" data-ja="夕方以降" data-en="After the evening">夕方以降</button>
+  <button type="button" id="threetimezone" onclick="selecttimezone(this)" data-ja="夕方以降" data-en="Evening or later">夕方以降</button>
   <button type="button" id="fourtimezone" onclick="selecttimezone(this)" data-ja="土日祝" data-en="Saturdays, Sundays, and holidays">土日祝</button>
 </div>
 
-<div class="label" data-ja="当店を知ったきっかけ" data-en="How did you find out about our store?">　　当店を知ったきっかけ<span class="required">必須</span></div>
+<div class="label" data-ja="当店を知ったきっかけ" data-en="How did you find out about our store?">当店を知ったきっかけ<span class="required">必須</span></div>
 <div class="douki-buttons">
   <button type="button" id="threedouki" onclick="selectdouki(this)" data-ja="Google等での検索" data-en="Google Search">Google等での検索</button>
-  <button type="button" id="onedouki" onclick="selectdouki(this)" data-ja="滞在中のホテルで予約してもらった" data-en="I made a reservation at the hotel">滞在中のホテルで予約してもらった</button>
+  <button type="button" id="onedouki" onclick="selectdouki(this)" data-ja="滞在中のホテルで予約してもらった" data-en="Booked by the hotel I'm staying at">滞在中のホテルで予約してもらった</button>
   <button type="button" id="eitodouki" onclick="selectdouki(this)" data-ja="ホテル・カフェ等に置いてあったカード" data-en="Cards left at hotels, cafes, etc.">ホテル・カフェ等に置いてあったカード</button>
   <button type="button" id="twodouki" onclick="selectdouki(this)" data-ja="Instagram" data-en="Instagram">Instagram</button>
   <button type="button" id="fivedouki" onclick="selectdouki(this)" data-ja="知人の紹介" data-en="Referred by Friend">知人の紹介</button>
@@ -452,10 +521,12 @@
   <button type="button" id="fourdouki" onclick="selectdouki(this)" data-ja="ホットペッパービューティー" data-en="Hot Pepper Beauty">ホットペッパービューティー</button>
 </div>
 
+<div id="referrer-section" style="display:none;">
 <div class="label" data-ja='"知人の紹介"を選択された方は、紹介者のお名前をご記入ください。' data-en='If "Referred by Friend" was selected, please write the referrer’s name.'>
-  　"知人の紹介"を選択された方は、<br>　紹介者のお名前をご記入ください。
+  "知人の紹介"を選択された方は、<br>紹介者のお名前をご記入ください。
 </div>
 <textarea id="message7" rows="1" placeholder="入力してください" data-ja-placeholder="入力してください" data-en-placeholder="Please enter"></textarea>
+</div>
 
 <div class="label" data-ja="過去施術" data-en="Previous Treatments">過去施術<br>(過去にサロンで受けたことがある施術)<span class="required">必須</span></div>
 <div class="Introduction-buttons">
@@ -467,7 +538,7 @@
   <button type="button" id="sevenIntroduction" onclick="selectIntroduction(this)" data-ja="その他(過去施術)" data-en="Other">その他(過去施術)</button>
 </div>
 
-<div class="label" data-ja="薬品/ネイルでのアレルギー" data-en="Allergies to Products/Nails">　　薬品/ネイルでのアレルギー<span class="required">必須</span></div>
+<div class="label" data-ja="薬品/ネイルでのアレルギー" data-en="Allergies to Products/Nails">薬品/ネイルでのアレルギー<span class="required">必須</span></div>
 <div class="delivery-buttons">
   <button type="button" id="onedelivery" onclick="selectdelivery(this)" data-ja="薬品アレルギー有り" data-en="Yes (has allergies)">薬品アレルギー有り</button>
   <button type="button" id="twodelivery" onclick="selectdelivery(this)" data-ja="薬品アレルギー無し" data-en="No (no allergies)">薬品アレルギー無し</button>
@@ -475,14 +546,14 @@
 
 <div class="label" data-ja="現在補強または長さ出ししている箇所がある方は、<br>左右それぞれの本数をご記入ください。<br>(分かる範囲で結構です)" 
      data-en="If you have reinforcement or extensions, please note the number on each side (as far as you know).">
-  現在補強または長さ出ししている箇所がある方は、<br>　左右それぞれの本数をご記入ください。<br>　　(分かる範囲で結構です)<span class="required">必須</span>
+  現在補強または長さ出ししている箇所がある方は、<br>左右それぞれの本数をご記入ください。<br>(分かる範囲で結構です)
 </div>
 <textarea id="message8" rows="1" placeholder="入力してください" data-ja-placeholder="入力してください" data-en-placeholder="Please enter"></textarea>
 
 <div class="label"
      data-ja="施術後のお写真を、当サロンのSNS<br>（Instagram・ホットペッパーなど）で<br>ご紹介させていただいてもよろしいでしょうか？<br>※お顔や個人が特定される情報は載せません。<br>ご協力は任意です。"
      data-en="May we share your post-treatment photos on our salon's SNS (Instagram, Hot Pepper, etc.)? *Your face and identifiable information will not be shared. Cooperation is voluntary.">
-  施術後のお写真を、当サロンのSNS<br>（Instagram・ホットペッパーなど）で<br>ご紹介させていただいてもよろしいでしょうか？<br>※お顔や個人が特定される情報は載せません。<br>　　ご協力は任意です。<span class="required">必須</span>
+  施術後のお写真を、当サロンのSNS<br>（Instagram・ホットペッパーなど）で<br>ご紹介させていただいてもよろしいでしょうか？<br>※お顔や個人が特定される情報は載せません。<br>ご協力は任意です。<span class="required">必須</span>
 </div>
 <div class="snsphoto-buttons">
   <button type="button" id="onesnsphoto" onclick="selectsnsphoto(this)" data-ja="はい" data-en="Yes">はい</button>
@@ -490,10 +561,33 @@
   <button type="button" id="theoosnsphoto" onclick="selectsnsphoto(this)" data-ja="いいえ" data-en="No">いいえ</button>
 </div>
 
-<div class="label" 
-     data-ja="重要項目の同意" 
+<!-- 入力チェック一覧 -->
+<div class="checklist" id="checklist">
+  <h3 class="checklist-title" data-ja="入力チェック一覧" data-en="Input Checklist">入力チェック一覧</h3>
+  <ul>
+    <li data-check="message"><span class="chk-icon"></span><span class="chk-label" data-ja="ご来店日" data-en="Visit Date">ご来店日</span></li>
+    <li data-check="message2"><span class="chk-icon"></span><span class="chk-label" data-ja="お名前(漢字フルネーム)" data-en="Full Name (Kanji)">お名前(漢字フルネーム)</span></li>
+    <li data-check="message6"><span class="chk-icon"></span><span class="chk-label" data-ja="お名前(ふりがな)" data-en="Full Name (Phonetic)">お名前(ふりがな)</span></li>
+    <li data-check="message3"><span class="chk-icon"></span><span class="chk-label" data-ja="生年月日" data-en="Date of Birth">生年月日</span></li>
+    <li data-check="message4"><span class="chk-icon"></span><span class="chk-label" data-ja="電話番号" data-en="Phone Number">電話番号</span></li>
+    <li data-check="address"><span class="chk-icon"></span><span class="chk-label" data-ja="お住まい" data-en="Address">お住まい</span></li>
+    <li data-check="priority"><span class="chk-icon"></span><span class="chk-label" data-ja="お住まいの区" data-en="Ward where you live">お住まいの区</span></li>
+    <li data-check="demand"><span class="chk-icon"></span><span class="chk-label" data-ja="勤務先（または通っている区）" data-en="Workplace (or ward you commute to)">勤務先（または通っている区）</span></li>
+    <li data-check="timezone"><span class="chk-icon"></span><span class="chk-label" data-ja="来店しやすい時間帯" data-en="Convenient time to visit">来店しやすい時間帯</span></li>
+    <li data-check="douki"><span class="chk-icon"></span><span class="chk-label" data-ja="当店を知ったきっかけ" data-en="How you found us">当店を知ったきっかけ</span></li>
+    <li data-check="introduction"><span class="chk-icon"></span><span class="chk-label" data-ja="過去施術" data-en="Previous Treatments">過去施術</span></li>
+    <li data-check="delivery"><span class="chk-icon"></span><span class="chk-label" data-ja="薬品/ネイルでのアレルギー" data-en="Allergies to Products/Nails">薬品/ネイルでのアレルギー</span></li>
+    <li data-check="snsphoto"><span class="chk-icon"></span><span class="chk-label" data-ja="SNS紹介" data-en="SNS sharing">SNS紹介</span></li>
+  </ul>
+  <div class="checklist-progress">
+    <span id="checklist-count">0/13</span><span data-ja=" 項目入力済み" data-en=" items completed"> 項目入力済み</span>
+  </div>
+</div>
+
+<div class="label"
+     data-ja="重要項目の同意"
      data-en="Agreement to Important Items">
-  　　重要項目の同意<span class="required">必須</span>
+  重要項目の同意<span class="required">必須</span>
 </div>
 
 <div class="info-text"
@@ -527,7 +621,6 @@
 
 <div class="budgety-buttons">
   <button type="button" id="onebudgety" onclick="selectbudgety(this)" data-ja="同意する" data-en="I Agree">同意する</button>
-  <button type="button" id="twobudgety" onclick="selectbudgety(this)" data-ja="同意しない" data-en="I Do Not Agree">同意しない</button>
 </div>
 
 <button class="submit-button" onclick="submitForm()" data-ja="カウンセリングシート送信" data-en="Submit Counseling Sheet">
@@ -547,18 +640,42 @@
         let budgetyCount = '';
         let snsphotoCount = '';
 
-        // LIFF初期化
-        document.addEventListener('DOMContentLoaded', function () {
-            liff.init({
-                liffId: '2007479541-R32K8bYP' // ここにあなたのLIFF IDを入力
-            }).then(() => {
-                // LIFF初期化成功時の処理
-                console.log('LIFF初期化成功');
-            }).catch((err) => {
-                // LIFF初期化失敗時の処理
-                console.error('LIFF初期化失敗', err);
-            });
-        });
+        // LIFF初期化（共有プロミス + 失敗時は再試行できるようにリセット）
+        const LIFF_ID = '2007479541-R32K8bYP'; // ここにあなたのLIFF IDを入力
+        let liffInitPromise = null;
+        function ensureLiffReady() {
+            if (!liffInitPromise) {
+                liffInitPromise = liff.init({ liffId: LIFF_ID }).catch(err => {
+                    // 失敗時はリセットし、次回の呼び出しで再試行できるようにする
+                    liffInitPromise = null;
+                    throw err;
+                });
+            }
+            return liffInitPromise;
+        }
+        // ページ表示時に先行して初期化を開始（SDKは同期scriptで読込済み）
+        ensureLiffReady()
+            .then(() => console.log('LIFF初期化成功'))
+            .catch(err => console.error('LIFF初期化失敗', err));
+
+        // 送信リトライ：初期化完了を待ってから送信、一時失敗は指数バックオフで最大maxAttempts回
+        async function sendMessagesWithRetry(messages, maxAttempts = 3) {
+            let lastErr;
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                try {
+                    await ensureLiffReady();
+                    await liff.sendMessages(messages);
+                    return; // 成功
+                } catch (err) {
+                    lastErr = err;
+                    console.error('送信試行 ' + attempt + '/' + maxAttempts + ' 失敗', err);
+                    if (attempt < maxAttempts) {
+                        await new Promise(r => setTimeout(r, 600 * attempt));
+                    }
+                }
+            }
+            throw lastErr;
+        }
 
         // プレースホルダーを非表示にする関数
         function hidePlaceholder(placeholderId) {
@@ -574,10 +691,163 @@
         }
 
         function setLanguage(lang) {
+            const requiredText = { ja: '必須', en: 'Required' };
             document.querySelectorAll('[data-ja]').forEach(el => {
+                // 必須マークが付いている要素かどうかを置き換え前に判定
+                const hasRequired = el.querySelector('.required') !== null;
                 el.innerHTML = el.dataset[lang];
+                // 必須マークがあった要素は、選択中の言語で再付与する
+                if (hasRequired) {
+                    el.innerHTML += '<span class="required">' + requiredText[lang] + '</span>';
+                }
             });
         }
+
+        // 入力チェック一覧：各項目が入力／選択されているか判定する
+        function isChecklistFilled(key) {
+            const textValue = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value.trim() !== '' : false;
+            };
+            const groupSelected = (selector) => !!document.querySelector(selector + ' button.active');
+            switch (key) {
+                case 'message':  return textValue('message');
+                case 'message2': return textValue('message2');
+                case 'message6': return textValue('message6');
+                case 'message3': return textValue('message3');
+                case 'message4': return textValue('message4');
+                case 'address':  return groupSelected('.address-buttons');
+                case 'priority': return groupSelected('.priority-buttons');
+                case 'demand':   return groupSelected('.demand-buttons');
+                case 'timezone': return groupSelected('.timezone-buttons');
+                case 'douki':    return groupSelected('.douki-buttons');
+                case 'introduction': return groupSelected('.Introduction-buttons');
+                case 'delivery': return groupSelected('.delivery-buttons');
+                case 'snsphoto': return groupSelected('.snsphoto-buttons');
+            }
+            return false;
+        }
+
+        // 入力チェック一覧の表示を最新の状態に更新する
+        function updateChecklist() {
+            const checklist = document.getElementById('checklist');
+            if (!checklist) return;
+            const wardSection = document.getElementById('ward-section');
+            const wardVisible = wardSection && wardSection.style.display !== 'none';
+
+            let total = 0;
+            let done = 0;
+            checklist.querySelectorAll('li[data-check]').forEach(li => {
+                const key = li.getAttribute('data-check');
+                // 「お住まいの区」は名古屋市選択時のみチェック対象として表示
+                if (key === 'priority') {
+                    li.style.display = wardVisible ? 'flex' : 'none';
+                    if (!wardVisible) {
+                        li.classList.remove('done');
+                        return;
+                    }
+                }
+                total++;
+                const ok = isChecklistFilled(key);
+                li.classList.toggle('done', ok);
+                if (ok) done++;
+            });
+
+            const countEl = document.getElementById('checklist-count');
+            if (countEl) countEl.textContent = done + '/' + total;
+        }
+
+        // 入力・選択のたびにチェック一覧を更新
+        document.addEventListener('input', updateChecklist);
+        document.addEventListener('click', updateChecklist);
+        document.addEventListener('DOMContentLoaded', updateChecklist);
+
+        /* ====== 入力内容のローカルストレージ保存／復元 ====== */
+        const STORAGE_KEY = 'andovaSurveyData';
+        // 保存対象のテキスト入力欄
+        const SAVE_TEXT_FIELDS = ['message', 'message2', 'message6', 'message3', 'message4', 'message7', 'message8', 'wardFreeText'];
+        // 保存対象のボタングループ（キー → グループのセレクタ）
+        const SAVE_BUTTON_GROUPS = {
+            address: '.address-buttons',
+            priority: '.priority-buttons',
+            demand: '.demand-buttons',
+            timezone: '.timezone-buttons',
+            douki: '.douki-buttons',
+            introduction: '.Introduction-buttons',
+            delivery: '.delivery-buttons',
+            snsphoto: '.snsphoto-buttons',
+            budgety: '.budgety-buttons'
+        };
+
+        // 現在の入力・選択内容をローカルストレージに保存
+        function saveFormData() {
+            const data = { texts: {}, buttons: {} };
+            SAVE_TEXT_FIELDS.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) data.texts[id] = el.value;
+            });
+            Object.keys(SAVE_BUTTON_GROUPS).forEach(key => {
+                const active = document.querySelector(SAVE_BUTTON_GROUPS[key] + ' button.active');
+                data.buttons[key] = active ? active.getAttribute('data-ja') : '';
+            });
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch (e) {
+                /* ストレージが使用できない環境では何もしない */
+            }
+        }
+
+        // グループ内から data-ja が一致するボタンを取得
+        function findButtonByValue(groupSelector, value) {
+            const buttons = document.querySelectorAll(groupSelector + ' button');
+            for (let i = 0; i < buttons.length; i++) {
+                if (buttons[i].getAttribute('data-ja') === value) return buttons[i];
+            }
+            return null;
+        }
+
+        // ローカルストレージから入力・選択内容を復元
+        function restoreFormData() {
+            let data;
+            try {
+                data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            } catch (e) {
+                data = null;
+            }
+            if (!data) return;
+
+            // テキスト入力欄を先に復元（紹介者名などが選択復元で消えないように）
+            if (data.texts) {
+                SAVE_TEXT_FIELDS.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && typeof data.texts[id] === 'string') el.value = data.texts[id];
+                });
+            }
+
+            // ボタン選択を復元（住所→区の順で復元されるよう定義順に処理）
+            if (data.buttons) {
+                Object.keys(SAVE_BUTTON_GROUPS).forEach(key => {
+                    const value = data.buttons[key];
+                    if (!value) return;
+                    const btn = findButtonByValue(SAVE_BUTTON_GROUPS[key], value);
+                    // click() で各select関数を呼び出し、状態変数や条件付き表示も復元する
+                    if (btn) btn.click();
+                });
+            }
+
+            updateChecklist();
+        }
+
+        // 入力・選択のたびに保存
+        document.addEventListener('input', saveFormData);
+        document.addEventListener('click', saveFormData);
+
+        // ページ表示時に復元
+        document.addEventListener('DOMContentLoaded', restoreFormData);
+        // DOMContentLoaded済みの場合に備えて即時にも実行
+        restoreFormData();
+        // 初期表示の反映
+        updateChecklist();
 
 // ②：住所選択関数の修正版
 function selectaddress(element) {
@@ -609,6 +879,15 @@ function selectdouki(element) {
 
     element.classList.add('active');
     doukiCount = element.getAttribute('data-ja');
+
+    // 「知人の紹介」が選択されたときのみ紹介者名の入力欄を表示
+    const referrerSection = document.getElementById('referrer-section');
+    if (doukiCount === '知人の紹介') {
+        referrerSection.style.display = 'block';
+    } else {
+        referrerSection.style.display = 'none';
+        document.getElementById('message7').value = '';
+    }
 }
 
 function selectdemand(element) {
@@ -667,7 +946,7 @@ function selectsnsphoto(element) {
     snsphotoCount = element.getAttribute('data-ja');
 }
 
-        function submitForm() {
+        async function submitForm() {
             const message = document.getElementById('message').value;
             const message2 = document.getElementById('message2').value;
             const message3 = document.getElementById('message3').value;
@@ -772,19 +1051,45 @@ function selectsnsphoto(element) {
                 return;
             }
 
-            // LINEトークにメッセージを送信
-            liff.sendMessages([{
-                type: 'text',
-                text: `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.addressCount}\n\n【お住まいの区】\n・${formData.priorityCount}\n\n【お住まいの詳細】\n・${formData.wardFreeText}\n\n【勤務先】\n・${formData.demandCount}\n\n【来店しやすい時間帯】\n・${formData.timezoneCount}\n\n【当店を知ったきっかけ】\n・${formData.doukiCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【SNS紹介】\n・${formData.snsphotoCount}\n\n【重要項目の同意】\n・${formData.budgetyCount}`
-            }]).then(() => {
+            // 送信メッセージ本文
+            const messageText = `≪アンケート≫\n【ご来店日】\n・${formData.message}\n\n【お名前(漢字)】\n・${formData.message2}\n\n【お名前(ふりがな)】\n・${formData.message6}\n\n【生年月日】\n・${formData.message3}\n\n【電話番号】\n・${formData.message4}\n\n【お住まい】\n・${formData.addressCount}\n\n【お住まいの区】\n・${formData.priorityCount}\n\n【お住まいの詳細】\n・${formData.wardFreeText}\n\n【勤務先】\n・${formData.demandCount}\n\n【来店しやすい時間帯】\n・${formData.timezoneCount}\n\n【当店を知ったきっかけ】\n・${formData.doukiCount}\n\n【知人の紹介名】\n・${formData.message7}\n\n【過去施術】\n・${formData.IntroductionCount}\n\n【薬品/ネイルでのアレルギー】\n・${formData.deliveryCount}\n\n【長さ出し左右本数】\n・${formData.message8}\n\n【SNS紹介】\n・${formData.snsphotoCount}\n\n【重要項目の同意】\n・${formData.budgetyCount}`;
+
+            // 二重送信防止
+            const submitBtn = document.querySelector('.submit-button');
+            if (submitBtn && submitBtn.dataset.sending === '1') return;
+
+            // 初期化完了を待ってからアプリ内かどうかを確認
+            try { await ensureLiffReady(); } catch (e) { /* 下のリトライ送信で対処 */ }
+            if (typeof liff !== 'undefined' && liff.isInClient && !liff.isInClient()) {
+                alert('LINEアプリ内で開いてから送信してください。');
+                return;
+            }
+
+            // 送信中はボタンを無効化
+            if (submitBtn) {
+                submitBtn.dataset.sending = '1';
+                submitBtn.disabled = true;
+            }
+
+            try {
+                // 初期化待ち＋リトライ付きで送信
+                await sendMessagesWithRetry([{ type: 'text', text: messageText }], 3);
                 /* メッセージ送信成功時の処理 */
+                /* 保存済みの入力内容をクリア（次回は空の状態で開く） */
+                try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
                 alert('カウンセリングシートのご記入と、重要事項へのご同意、ありがとうございました。');
                 /* LIFFウィンドウを閉じる */
                 liff.closeWindow();
-            }).catch((err) => {
-                /* メッセージ送信失敗時の処理 */
+            } catch (err) {
+                /* メッセージ送信失敗時の処理：利用者に通知し、入力内容は保持して再送可能にする */
                 console.error('メッセージの送信に失敗しました', err);
-            });
+                alert('送信に失敗しました。通信環境をご確認のうえ、もう一度送信ボタンをタップしてください。');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.dataset.sending = '0';
+                    submitBtn.disabled = false;
+                }
+            }
         }
 
     </script>
